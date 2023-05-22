@@ -217,7 +217,7 @@ require (
 
 replace github.com/cosmos/cosmos-sdk => github.com/maticnetwork/cosmos-sdk v0.37.5-0.20220311095845-81690c6a53e7
 
-replace github.com/tendermint/tendermint => github.com/zecrey-labs/tendermint v0.0.1-polygon
+replace github.com/tendermint/tendermint => github.com/zecrey-labs/tendermint v0.0.3-polygon
 
 replace github.com/ethereum/go-ethereum/polygon => ./
 
