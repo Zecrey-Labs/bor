@@ -21,17 +21,17 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/core"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/light"
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/metrics"
-	"github.com/ethereum/go-ethereum/p2p"
-	"github.com/ethereum/go-ethereum/p2p/enode"
-	"github.com/ethereum/go-ethereum/p2p/enr"
-	"github.com/ethereum/go-ethereum/rlp"
-	"github.com/ethereum/go-ethereum/trie"
+	"github.com/ethereum/go-ethereum/polygon/common"
+	"github.com/ethereum/go-ethereum/polygon/core"
+	"github.com/ethereum/go-ethereum/polygon/core/types"
+	"github.com/ethereum/go-ethereum/polygon/light"
+	"github.com/ethereum/go-ethereum/polygon/log"
+	"github.com/ethereum/go-ethereum/polygon/metrics"
+	"github.com/ethereum/go-ethereum/polygon/p2p"
+	"github.com/ethereum/go-ethereum/polygon/p2p/enode"
+	"github.com/ethereum/go-ethereum/polygon/p2p/enr"
+	"github.com/ethereum/go-ethereum/polygon/rlp"
+	"github.com/ethereum/go-ethereum/polygon/trie"
 )
 
 const (

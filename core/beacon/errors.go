@@ -16,7 +16,7 @@
 
 package beacon
 
-import "github.com/ethereum/go-ethereum/rpc"
+import "github.com/ethereum/go-ethereum/polygon/rpc"
 
 var (
 	// VALID is returned by the engine API in the following calls:

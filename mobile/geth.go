@@ -24,17 +24,17 @@ import (
 	"fmt"
 	"path/filepath"
 
-	"github.com/ethereum/go-ethereum/core"
-	"github.com/ethereum/go-ethereum/eth/downloader"
-	"github.com/ethereum/go-ethereum/eth/ethconfig"
-	"github.com/ethereum/go-ethereum/ethclient"
-	"github.com/ethereum/go-ethereum/ethstats"
-	"github.com/ethereum/go-ethereum/internal/debug"
-	"github.com/ethereum/go-ethereum/les"
-	"github.com/ethereum/go-ethereum/node"
-	"github.com/ethereum/go-ethereum/p2p"
-	"github.com/ethereum/go-ethereum/p2p/nat"
-	"github.com/ethereum/go-ethereum/params"
+	"github.com/ethereum/go-ethereum/polygon/core"
+	"github.com/ethereum/go-ethereum/polygon/eth/downloader"
+	"github.com/ethereum/go-ethereum/polygon/eth/ethconfig"
+	"github.com/ethereum/go-ethereum/polygon/ethclient"
+	"github.com/ethereum/go-ethereum/polygon/ethstats"
+	"github.com/ethereum/go-ethereum/polygon/internal/debug"
+	"github.com/ethereum/go-ethereum/polygon/les"
+	"github.com/ethereum/go-ethereum/polygon/node"
+	"github.com/ethereum/go-ethereum/polygon/p2p"
+	"github.com/ethereum/go-ethereum/polygon/p2p/nat"
+	"github.com/ethereum/go-ethereum/polygon/params"
 )
 
 // NodeConfig represents the collection of configuration values to fine tune the Geth

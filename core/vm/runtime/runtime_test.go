@@ -24,21 +24,21 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ethereum/go-ethereum/accounts/abi"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/consensus"
-	"github.com/ethereum/go-ethereum/core"
-	"github.com/ethereum/go-ethereum/core/asm"
-	"github.com/ethereum/go-ethereum/core/rawdb"
-	"github.com/ethereum/go-ethereum/core/state"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/core/vm"
-	"github.com/ethereum/go-ethereum/eth/tracers"
-	"github.com/ethereum/go-ethereum/eth/tracers/logger"
-	"github.com/ethereum/go-ethereum/params"
+	"github.com/ethereum/go-ethereum/polygon/accounts/abi"
+	"github.com/ethereum/go-ethereum/polygon/common"
+	"github.com/ethereum/go-ethereum/polygon/consensus"
+	"github.com/ethereum/go-ethereum/polygon/core"
+	"github.com/ethereum/go-ethereum/polygon/core/asm"
+	"github.com/ethereum/go-ethereum/polygon/core/rawdb"
+	"github.com/ethereum/go-ethereum/polygon/core/state"
+	"github.com/ethereum/go-ethereum/polygon/core/types"
+	"github.com/ethereum/go-ethereum/polygon/core/vm"
+	"github.com/ethereum/go-ethereum/polygon/eth/tracers"
+	"github.com/ethereum/go-ethereum/polygon/eth/tracers/logger"
+	"github.com/ethereum/go-ethereum/polygon/params"
 
 	// force-load js tracers to trigger registration
-	_ "github.com/ethereum/go-ethereum/eth/tracers/js"
+	_ "github.com/ethereum/go-ethereum/polygon/eth/tracers/js"
 )
 
 func TestDefaults(t *testing.T) {

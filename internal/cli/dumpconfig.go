@@ -6,7 +6,7 @@ import (
 
 	"github.com/BurntSushi/toml"
 
-	"github.com/ethereum/go-ethereum/internal/cli/server"
+	"github.com/ethereum/go-ethereum/polygon/internal/cli/server"
 )
 
 // DumpconfigCommand is for exporting user provided flags into a config file

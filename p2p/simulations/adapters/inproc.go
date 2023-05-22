@@ -24,13 +24,13 @@ import (
 	"net"
 	"sync"
 
-	"github.com/ethereum/go-ethereum/event"
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/node"
-	"github.com/ethereum/go-ethereum/p2p"
-	"github.com/ethereum/go-ethereum/p2p/enode"
-	"github.com/ethereum/go-ethereum/p2p/simulations/pipes"
-	"github.com/ethereum/go-ethereum/rpc"
+	"github.com/ethereum/go-ethereum/polygon/event"
+	"github.com/ethereum/go-ethereum/polygon/log"
+	"github.com/ethereum/go-ethereum/polygon/node"
+	"github.com/ethereum/go-ethereum/polygon/p2p"
+	"github.com/ethereum/go-ethereum/polygon/p2p/enode"
+	"github.com/ethereum/go-ethereum/polygon/p2p/simulations/pipes"
+	"github.com/ethereum/go-ethereum/polygon/rpc"
 	"github.com/gorilla/websocket"
 )
 

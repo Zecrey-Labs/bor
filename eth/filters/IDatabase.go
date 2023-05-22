@@ -7,7 +7,7 @@ package filters
 import (
 	reflect "reflect"
 
-	ethdb "github.com/ethereum/go-ethereum/ethdb"
+	ethdb "github.com/ethereum/go-ethereum/polygon/ethdb"
 	gomock "github.com/golang/mock/gomock"
 )
 

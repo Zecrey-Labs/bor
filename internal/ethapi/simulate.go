@@ -7,10 +7,10 @@ import (
 	"math"
 	"time"
 
-	"github.com/ethereum/go-ethereum/core"
-	"github.com/ethereum/go-ethereum/core/vm"
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/rpc"
+	"github.com/ethereum/go-ethereum/polygon/core"
+	"github.com/ethereum/go-ethereum/polygon/core/vm"
+	"github.com/ethereum/go-ethereum/polygon/log"
+	"github.com/ethereum/go-ethereum/polygon/rpc"
 )
 
 func DoSimulateCall(ctx context.Context, b Backend, args TransactionArgs, blockNrOrHash rpc.BlockNumberOrHash, overrides *StateOverride, timeout time.Duration, globalGasCap uint64) (*core.ExecutionResult, error) {

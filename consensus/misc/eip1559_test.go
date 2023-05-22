@@ -20,8 +20,8 @@ import (
 	"math/big"
 	"testing"
 
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/params"
+	"github.com/ethereum/go-ethereum/polygon/core/types"
+	"github.com/ethereum/go-ethereum/polygon/params"
 )
 
 // copyConfig does a _shallow_ copy of a given config. Safe to set new values, but

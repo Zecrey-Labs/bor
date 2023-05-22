@@ -11,14 +11,14 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/ethereum/go-ethereum/cmd/utils"
-	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/ethereum/go-ethereum/internal/cli/flagset"
-	"github.com/ethereum/go-ethereum/internal/cli/server"
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/p2p/discover"
-	"github.com/ethereum/go-ethereum/p2p/enode"
-	"github.com/ethereum/go-ethereum/p2p/nat"
+	"github.com/ethereum/go-ethereum/polygon/cmd/utils"
+	"github.com/ethereum/go-ethereum/polygon/crypto"
+	"github.com/ethereum/go-ethereum/polygon/internal/cli/flagset"
+	"github.com/ethereum/go-ethereum/polygon/internal/cli/server"
+	"github.com/ethereum/go-ethereum/polygon/log"
+	"github.com/ethereum/go-ethereum/polygon/p2p/discover"
+	"github.com/ethereum/go-ethereum/polygon/p2p/enode"
+	"github.com/ethereum/go-ethereum/polygon/p2p/nat"
 
 	"github.com/mitchellh/cli"
 )

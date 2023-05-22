@@ -27,10 +27,10 @@ import (
 
 	"github.com/holiman/uint256"
 
-	"github.com/ethereum/go-ethereum/common"
-	cmath "github.com/ethereum/go-ethereum/common/math"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/log"
+	"github.com/ethereum/go-ethereum/polygon/common"
+	cmath "github.com/ethereum/go-ethereum/polygon/common/math"
+	"github.com/ethereum/go-ethereum/polygon/core/types"
+	"github.com/ethereum/go-ethereum/polygon/log"
 )
 
 // nonceHeap is a heap.Interface implementation over 64bit unsigned integers for

@@ -15,7 +15,7 @@ import (
 
 	"github.com/mitchellh/cli"
 
-	"github.com/ethereum/go-ethereum/internal/cli/server/proto"
+	"github.com/ethereum/go-ethereum/polygon/internal/cli/server/proto"
 
 	grpc_net_conn "github.com/JekaMas/go-grpc-net-conn"
 	"google.golang.org/grpc"

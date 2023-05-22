@@ -3,7 +3,7 @@ package checkpoint
 import (
 	"math/big"
 
-	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/polygon/common"
 )
 
 // Checkpoint defines a response object type of bor checkpoint

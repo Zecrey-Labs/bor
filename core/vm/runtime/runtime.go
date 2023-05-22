@@ -21,12 +21,12 @@ import (
 	"math/big"
 	"time"
 
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/core/rawdb"
-	"github.com/ethereum/go-ethereum/core/state"
-	"github.com/ethereum/go-ethereum/core/vm"
-	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/ethereum/go-ethereum/params"
+	"github.com/ethereum/go-ethereum/polygon/common"
+	"github.com/ethereum/go-ethereum/polygon/core/rawdb"
+	"github.com/ethereum/go-ethereum/polygon/core/state"
+	"github.com/ethereum/go-ethereum/polygon/core/vm"
+	"github.com/ethereum/go-ethereum/polygon/crypto"
+	"github.com/ethereum/go-ethereum/polygon/params"
 )
 
 // Config is a basic type specifying certain configuration flags for running

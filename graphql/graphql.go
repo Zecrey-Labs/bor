@@ -24,16 +24,15 @@ import (
 	"math/big"
 	"strconv"
 
-	"github.com/ethereum/go-ethereum"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
-	"github.com/ethereum/go-ethereum/common/math"
-	"github.com/ethereum/go-ethereum/consensus/misc"
-	"github.com/ethereum/go-ethereum/core/state"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/eth/filters"
-	"github.com/ethereum/go-ethereum/internal/ethapi"
-	"github.com/ethereum/go-ethereum/rpc"
+	"github.com/ethereum/go-ethereum/polygon/common"
+	"github.com/ethereum/go-ethereum/polygon/common/hexutil"
+	"github.com/ethereum/go-ethereum/polygon/common/math"
+	"github.com/ethereum/go-ethereum/polygon/consensus/misc"
+	"github.com/ethereum/go-ethereum/polygon/core/state"
+	"github.com/ethereum/go-ethereum/polygon/core/types"
+	"github.com/ethereum/go-ethereum/polygon/eth/filters"
+	"github.com/ethereum/go-ethereum/polygon/internal/ethapi"
+	"github.com/ethereum/go-ethereum/polygon/rpc"
 )
 
 var (

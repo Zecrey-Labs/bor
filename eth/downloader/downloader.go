@@ -25,17 +25,16 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/ethereum/go-ethereum"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/core/rawdb"
-	"github.com/ethereum/go-ethereum/core/state/snapshot"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/eth/downloader/whitelist"
-	"github.com/ethereum/go-ethereum/eth/protocols/snap"
-	"github.com/ethereum/go-ethereum/ethdb"
-	"github.com/ethereum/go-ethereum/event"
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/params"
+	"github.com/ethereum/go-ethereum/polygon/common"
+	"github.com/ethereum/go-ethereum/polygon/core/rawdb"
+	"github.com/ethereum/go-ethereum/polygon/core/state/snapshot"
+	"github.com/ethereum/go-ethereum/polygon/core/types"
+	"github.com/ethereum/go-ethereum/polygon/eth/downloader/whitelist"
+	"github.com/ethereum/go-ethereum/polygon/eth/protocols/snap"
+	"github.com/ethereum/go-ethereum/polygon/ethdb"
+	"github.com/ethereum/go-ethereum/polygon/event"
+	"github.com/ethereum/go-ethereum/polygon/log"
+	"github.com/ethereum/go-ethereum/polygon/params"
 )
 
 var (

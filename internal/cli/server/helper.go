@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/ethereum/go-ethereum/common/network"
+	"github.com/ethereum/go-ethereum/polygon/common/network"
 )
 
 func CreateMockServer(config *Config) (*Server, error) {

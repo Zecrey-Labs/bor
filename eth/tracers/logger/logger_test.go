@@ -20,10 +20,10 @@ import (
 	"math/big"
 	"testing"
 
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/core/state"
-	"github.com/ethereum/go-ethereum/core/vm"
-	"github.com/ethereum/go-ethereum/params"
+	"github.com/ethereum/go-ethereum/polygon/common"
+	"github.com/ethereum/go-ethereum/polygon/core/state"
+	"github.com/ethereum/go-ethereum/polygon/core/vm"
+	"github.com/ethereum/go-ethereum/polygon/params"
 )
 
 type dummyContractRef struct {

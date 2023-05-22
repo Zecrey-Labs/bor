@@ -1,7 +1,7 @@
 package heimdallapp
 
 import (
-	"github.com/ethereum/go-ethereum/log"
+	"github.com/ethereum/go-ethereum/polygon/log"
 
 	"github.com/maticnetwork/heimdall/app"
 	"github.com/maticnetwork/heimdall/cmd/heimdalld/service"

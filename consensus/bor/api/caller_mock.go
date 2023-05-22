@@ -8,9 +8,9 @@ import (
 	context "context"
 	reflect "reflect"
 
-	hexutil "github.com/ethereum/go-ethereum/common/hexutil"
-	ethapi "github.com/ethereum/go-ethereum/internal/ethapi"
-	rpc "github.com/ethereum/go-ethereum/rpc"
+	hexutil "github.com/ethereum/go-ethereum/polygon/common/hexutil"
+	ethapi "github.com/ethereum/go-ethereum/polygon/internal/ethapi"
+	rpc "github.com/ethereum/go-ethereum/polygon/rpc"
 	gomock "github.com/golang/mock/gomock"
 )
 

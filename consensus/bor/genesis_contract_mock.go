@@ -8,10 +8,10 @@ import (
 	big "math/big"
 	reflect "reflect"
 
-	clerk "github.com/ethereum/go-ethereum/consensus/bor/clerk"
-	statefull "github.com/ethereum/go-ethereum/consensus/bor/statefull"
-	state "github.com/ethereum/go-ethereum/core/state"
-	types "github.com/ethereum/go-ethereum/core/types"
+	clerk "github.com/ethereum/go-ethereum/polygon/consensus/bor/clerk"
+	statefull "github.com/ethereum/go-ethereum/polygon/consensus/bor/statefull"
+	state "github.com/ethereum/go-ethereum/polygon/core/state"
+	types "github.com/ethereum/go-ethereum/polygon/core/types"
 	gomock "github.com/golang/mock/gomock"
 )
 

@@ -8,9 +8,9 @@ import (
 	context "context"
 	reflect "reflect"
 
-	clerk "github.com/ethereum/go-ethereum/consensus/bor/clerk"
-	checkpoint "github.com/ethereum/go-ethereum/consensus/bor/heimdall/checkpoint"
-	span "github.com/ethereum/go-ethereum/consensus/bor/heimdall/span"
+	clerk "github.com/ethereum/go-ethereum/polygon/consensus/bor/clerk"
+	checkpoint "github.com/ethereum/go-ethereum/polygon/consensus/bor/heimdall/checkpoint"
+	span "github.com/ethereum/go-ethereum/polygon/consensus/bor/heimdall/span"
 	gomock "github.com/golang/mock/gomock"
 )
 

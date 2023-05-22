@@ -27,7 +27,7 @@ import (
 
 	"golang.org/x/tools/go/packages"
 
-	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/polygon/common"
 )
 
 const pathOfPackageRLP = "github.com/ethereum/go-ethereum/rlp"

@@ -21,7 +21,7 @@ import (
 
 	"github.com/holiman/uint256"
 
-	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/polygon/common"
 )
 
 //go:generate go run github.com/fjl/gencodec@latest -type AccessTuple -out gen_access_tuple.go

@@ -6,7 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/ethereum/go-ethereum/internal/cli/server/proto"
+	"github.com/ethereum/go-ethereum/polygon/internal/cli/server/proto"
 )
 
 func TestGatherBlocks(t *testing.T) {

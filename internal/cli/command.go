@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/ethereum/go-ethereum/accounts/keystore"
-	"github.com/ethereum/go-ethereum/internal/cli/flagset"
-	"github.com/ethereum/go-ethereum/internal/cli/server"
-	"github.com/ethereum/go-ethereum/internal/cli/server/proto"
-	"github.com/ethereum/go-ethereum/node"
+	"github.com/ethereum/go-ethereum/polygon/accounts/keystore"
+	"github.com/ethereum/go-ethereum/polygon/internal/cli/flagset"
+	"github.com/ethereum/go-ethereum/polygon/internal/cli/server"
+	"github.com/ethereum/go-ethereum/polygon/internal/cli/server/proto"
+	"github.com/ethereum/go-ethereum/polygon/node"
 
 	"github.com/mitchellh/cli"
 	"github.com/ryanuber/columnize"

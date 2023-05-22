@@ -5,12 +5,12 @@ package cli
 import (
 	"strings"
 
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/core/state/pruner"
-	"github.com/ethereum/go-ethereum/internal/cli/flagset"
-	"github.com/ethereum/go-ethereum/internal/cli/server"
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/node"
+	"github.com/ethereum/go-ethereum/polygon/common"
+	"github.com/ethereum/go-ethereum/polygon/core/state/pruner"
+	"github.com/ethereum/go-ethereum/polygon/internal/cli/flagset"
+	"github.com/ethereum/go-ethereum/polygon/internal/cli/server"
+	"github.com/ethereum/go-ethereum/polygon/log"
+	"github.com/ethereum/go-ethereum/polygon/node"
 
 	"github.com/mitchellh/cli"
 )

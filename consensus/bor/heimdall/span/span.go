@@ -1,7 +1,7 @@
 package span
 
 import (
-	"github.com/ethereum/go-ethereum/consensus/bor/valset"
+	"github.com/ethereum/go-ethereum/polygon/consensus/bor/valset"
 )
 
 // Span Bor represents a current bor span

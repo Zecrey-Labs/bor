@@ -3,9 +3,9 @@ package api
 import (
 	"context"
 
-	"github.com/ethereum/go-ethereum/common/hexutil"
-	"github.com/ethereum/go-ethereum/internal/ethapi"
-	"github.com/ethereum/go-ethereum/rpc"
+	"github.com/ethereum/go-ethereum/polygon/common/hexutil"
+	"github.com/ethereum/go-ethereum/polygon/internal/ethapi"
+	"github.com/ethereum/go-ethereum/polygon/rpc"
 )
 
 //go:generate mockgen -destination=./caller_mock.go -package=api . Caller

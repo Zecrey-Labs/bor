@@ -10,7 +10,7 @@ import (
 	"github.com/mitchellh/cli"
 	"github.com/stretchr/testify/require"
 
-	"github.com/ethereum/go-ethereum/internal/cli/server"
+	"github.com/ethereum/go-ethereum/polygon/internal/cli/server"
 )
 
 var currentDir string

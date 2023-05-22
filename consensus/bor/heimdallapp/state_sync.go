@@ -6,7 +6,7 @@ import (
 
 	"github.com/maticnetwork/heimdall/clerk/types"
 
-	"github.com/ethereum/go-ethereum/consensus/bor/clerk"
+	"github.com/ethereum/go-ethereum/polygon/consensus/bor/clerk"
 
 	abci "github.com/tendermint/tendermint/abci/types"
 )

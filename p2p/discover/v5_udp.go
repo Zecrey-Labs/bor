@@ -29,12 +29,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ethereum/go-ethereum/common/mclock"
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/p2p/discover/v5wire"
-	"github.com/ethereum/go-ethereum/p2p/enode"
-	"github.com/ethereum/go-ethereum/p2p/enr"
-	"github.com/ethereum/go-ethereum/p2p/netutil"
+	"github.com/ethereum/go-ethereum/polygon/common/mclock"
+	"github.com/ethereum/go-ethereum/polygon/log"
+	"github.com/ethereum/go-ethereum/polygon/p2p/discover/v5wire"
+	"github.com/ethereum/go-ethereum/polygon/p2p/enode"
+	"github.com/ethereum/go-ethereum/polygon/p2p/enr"
+	"github.com/ethereum/go-ethereum/polygon/p2p/netutil"
 )
 
 const (

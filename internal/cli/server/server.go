@@ -22,26 +22,26 @@ import (
 	semconv "go.opentelemetry.io/otel/semconv/v1.4.0"
 	"google.golang.org/grpc"
 
-	"github.com/ethereum/go-ethereum/accounts"
-	"github.com/ethereum/go-ethereum/accounts/keystore"
-	"github.com/ethereum/go-ethereum/consensus/beacon" //nolint:typecheck
-	"github.com/ethereum/go-ethereum/consensus/bor"    //nolint:typecheck
-	"github.com/ethereum/go-ethereum/consensus/clique"
-	"github.com/ethereum/go-ethereum/eth"
-	"github.com/ethereum/go-ethereum/eth/tracers"
-	"github.com/ethereum/go-ethereum/ethstats"
-	"github.com/ethereum/go-ethereum/graphql"
-	"github.com/ethereum/go-ethereum/internal/cli/server/pprof"
-	"github.com/ethereum/go-ethereum/internal/cli/server/proto"
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/metrics"
-	"github.com/ethereum/go-ethereum/metrics/influxdb"
-	"github.com/ethereum/go-ethereum/metrics/prometheus"
-	"github.com/ethereum/go-ethereum/node"
+	"github.com/ethereum/go-ethereum/polygon/accounts"
+	"github.com/ethereum/go-ethereum/polygon/accounts/keystore"
+	"github.com/ethereum/go-ethereum/polygon/consensus/beacon" //nolint:typecheck
+	"github.com/ethereum/go-ethereum/polygon/consensus/bor"    //nolint:typecheck
+	"github.com/ethereum/go-ethereum/polygon/consensus/clique"
+	"github.com/ethereum/go-ethereum/polygon/eth"
+	"github.com/ethereum/go-ethereum/polygon/eth/tracers"
+	"github.com/ethereum/go-ethereum/polygon/ethstats"
+	"github.com/ethereum/go-ethereum/polygon/graphql"
+	"github.com/ethereum/go-ethereum/polygon/internal/cli/server/pprof"
+	"github.com/ethereum/go-ethereum/polygon/internal/cli/server/proto"
+	"github.com/ethereum/go-ethereum/polygon/log"
+	"github.com/ethereum/go-ethereum/polygon/metrics"
+	"github.com/ethereum/go-ethereum/polygon/metrics/influxdb"
+	"github.com/ethereum/go-ethereum/polygon/metrics/prometheus"
+	"github.com/ethereum/go-ethereum/polygon/node"
 
 	// Force-load the tracer engines to trigger registration
-	_ "github.com/ethereum/go-ethereum/eth/tracers/js"
-	_ "github.com/ethereum/go-ethereum/eth/tracers/native"
+	_ "github.com/ethereum/go-ethereum/polygon/eth/tracers/js"
+	_ "github.com/ethereum/go-ethereum/polygon/eth/tracers/native"
 )
 
 type Server struct {

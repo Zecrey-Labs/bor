@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/ethereum/go-ethereum/internal/cli"
+	"github.com/ethereum/go-ethereum/polygon/internal/cli"
 )
 
 func main() {

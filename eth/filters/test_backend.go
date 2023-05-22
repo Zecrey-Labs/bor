@@ -5,15 +5,15 @@ import (
 	"crypto/rand"
 	"math/big"
 
-	common "github.com/ethereum/go-ethereum/common"
-	core "github.com/ethereum/go-ethereum/core"
-	bloombits "github.com/ethereum/go-ethereum/core/bloombits"
-	"github.com/ethereum/go-ethereum/core/rawdb"
-	types "github.com/ethereum/go-ethereum/core/types"
-	ethdb "github.com/ethereum/go-ethereum/ethdb"
-	event "github.com/ethereum/go-ethereum/event"
-	"github.com/ethereum/go-ethereum/params"
-	rpc "github.com/ethereum/go-ethereum/rpc"
+	common "github.com/ethereum/go-ethereum/polygon/common"
+	core "github.com/ethereum/go-ethereum/polygon/core"
+	bloombits "github.com/ethereum/go-ethereum/polygon/core/bloombits"
+	"github.com/ethereum/go-ethereum/polygon/core/rawdb"
+	types "github.com/ethereum/go-ethereum/polygon/core/types"
+	ethdb "github.com/ethereum/go-ethereum/polygon/ethdb"
+	event "github.com/ethereum/go-ethereum/polygon/event"
+	"github.com/ethereum/go-ethereum/polygon/params"
+	rpc "github.com/ethereum/go-ethereum/polygon/rpc"
 )
 
 type TestBackend struct {

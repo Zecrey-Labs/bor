@@ -6,8 +6,8 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/types"
 
-	"github.com/ethereum/go-ethereum/consensus/bor/heimdall/checkpoint"
-	"github.com/ethereum/go-ethereum/log"
+	"github.com/ethereum/go-ethereum/polygon/consensus/bor/heimdall/checkpoint"
+	"github.com/ethereum/go-ethereum/polygon/log"
 
 	hmTypes "github.com/maticnetwork/heimdall/types"
 	abci "github.com/tendermint/tendermint/abci/types"

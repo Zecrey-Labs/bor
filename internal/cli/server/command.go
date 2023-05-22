@@ -12,7 +12,7 @@ import (
 	"github.com/mitchellh/cli"
 	"github.com/pelletier/go-toml"
 
-	"github.com/ethereum/go-ethereum/log"
+	"github.com/ethereum/go-ethereum/polygon/log"
 )
 
 // Command is the command to start the sever

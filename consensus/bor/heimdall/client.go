@@ -11,11 +11,11 @@ import (
 	"sort"
 	"time"
 
-	"github.com/ethereum/go-ethereum/consensus/bor/clerk"
-	"github.com/ethereum/go-ethereum/consensus/bor/heimdall/checkpoint"
-	"github.com/ethereum/go-ethereum/consensus/bor/heimdall/span"
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/metrics"
+	"github.com/ethereum/go-ethereum/polygon/consensus/bor/clerk"
+	"github.com/ethereum/go-ethereum/polygon/consensus/bor/heimdall/checkpoint"
+	"github.com/ethereum/go-ethereum/polygon/consensus/bor/heimdall/span"
+	"github.com/ethereum/go-ethereum/polygon/log"
+	"github.com/ethereum/go-ethereum/polygon/metrics"
 )
 
 var (

@@ -8,13 +8,13 @@ import (
 	context "context"
 	reflect "reflect"
 
-	common "github.com/ethereum/go-ethereum/common"
-	span "github.com/ethereum/go-ethereum/consensus/bor/heimdall/span"
-	valset "github.com/ethereum/go-ethereum/consensus/bor/valset"
-	core "github.com/ethereum/go-ethereum/core"
-	state "github.com/ethereum/go-ethereum/core/state"
-	types "github.com/ethereum/go-ethereum/core/types"
-	rpc "github.com/ethereum/go-ethereum/rpc"
+	common "github.com/ethereum/go-ethereum/polygon/common"
+	span "github.com/ethereum/go-ethereum/polygon/consensus/bor/heimdall/span"
+	valset "github.com/ethereum/go-ethereum/polygon/consensus/bor/valset"
+	core "github.com/ethereum/go-ethereum/polygon/core"
+	state "github.com/ethereum/go-ethereum/polygon/core/state"
+	types "github.com/ethereum/go-ethereum/polygon/core/types"
+	rpc "github.com/ethereum/go-ethereum/polygon/rpc"
 	gomock "github.com/golang/mock/gomock"
 )
 

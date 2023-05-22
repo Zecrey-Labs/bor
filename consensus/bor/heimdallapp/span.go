@@ -5,9 +5,9 @@ import (
 
 	hmTypes "github.com/maticnetwork/heimdall/types"
 
-	"github.com/ethereum/go-ethereum/consensus/bor/heimdall/span"
-	"github.com/ethereum/go-ethereum/consensus/bor/valset"
-	"github.com/ethereum/go-ethereum/log"
+	"github.com/ethereum/go-ethereum/polygon/consensus/bor/heimdall/span"
+	"github.com/ethereum/go-ethereum/polygon/consensus/bor/valset"
+	"github.com/ethereum/go-ethereum/polygon/log"
 )
 
 func (h *HeimdallAppClient) Span(ctx context.Context, spanID uint64) (*span.HeimdallSpan, error) {

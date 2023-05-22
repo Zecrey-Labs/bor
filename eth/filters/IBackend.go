@@ -8,13 +8,13 @@ import (
 	context "context"
 	reflect "reflect"
 
-	common "github.com/ethereum/go-ethereum/common"
-	core "github.com/ethereum/go-ethereum/core"
-	bloombits "github.com/ethereum/go-ethereum/core/bloombits"
-	types "github.com/ethereum/go-ethereum/core/types"
-	ethdb "github.com/ethereum/go-ethereum/ethdb"
-	event "github.com/ethereum/go-ethereum/event"
-	rpc "github.com/ethereum/go-ethereum/rpc"
+	common "github.com/ethereum/go-ethereum/polygon/common"
+	core "github.com/ethereum/go-ethereum/polygon/core"
+	bloombits "github.com/ethereum/go-ethereum/polygon/core/bloombits"
+	types "github.com/ethereum/go-ethereum/polygon/core/types"
+	ethdb "github.com/ethereum/go-ethereum/polygon/ethdb"
+	event "github.com/ethereum/go-ethereum/polygon/event"
+	rpc "github.com/ethereum/go-ethereum/polygon/rpc"
 	gomock "github.com/golang/mock/gomock"
 )
 
