@@ -18,6 +18,7 @@ package external
 
 import (
 	"fmt"
+	ethereum "github.com/ethereum/go-ethereum/polygon"
 	"math/big"
 	"sync"
 

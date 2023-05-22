@@ -20,6 +20,7 @@ package usbwallet
 import (
 	"context"
 	"fmt"
+	ethereum "github.com/ethereum/go-ethereum/polygon"
 	"io"
 	"math/big"
 	"sync"

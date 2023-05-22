@@ -18,6 +18,7 @@ package core
 
 import (
 	"errors"
+	ethereum "github.com/ethereum/go-ethereum/polygon"
 	"math/big"
 
 	"github.com/maticnetwork/crand"

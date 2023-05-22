@@ -20,6 +20,7 @@ package geth
 
 import (
 	"errors"
+	ethereum "github.com/ethereum/go-ethereum/polygon"
 
 	"github.com/ethereum/go-ethereum/polygon/common"
 )

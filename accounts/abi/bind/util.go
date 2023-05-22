@@ -19,6 +19,7 @@ package bind
 import (
 	"context"
 	"errors"
+	ethereum "github.com/ethereum/go-ethereum/polygon"
 	"time"
 
 	"github.com/ethereum/go-ethereum/polygon/common"

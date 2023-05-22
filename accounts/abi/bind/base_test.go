@@ -18,6 +18,7 @@ package bind_test
 
 import (
 	"context"
+	ethereum "github.com/ethereum/go-ethereum/polygon"
 	"math/big"
 	"reflect"
 	"strings"

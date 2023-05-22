@@ -3,6 +3,7 @@ package eth
 import (
 	"context"
 	"errors"
+	ethereum "github.com/ethereum/go-ethereum/polygon"
 
 	"github.com/ethereum/go-ethereum/polygon/common"
 	"github.com/ethereum/go-ethereum/polygon/consensus/bor"
