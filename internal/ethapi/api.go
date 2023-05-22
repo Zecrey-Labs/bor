@@ -1095,7 +1095,7 @@ func (s *PublicBlockChainAPI) Call(ctx context.Context, args TransactionArgs, bl
 	return result.Return(), result.Err
 }
 
-func (s *PublicBlockChainAPI) SimulateCall(ctx context.Context, args TransactionArgs, blockNrOrHash rpc.BlockNumberOrHash, overrides *StateOverride) ([]vm.AssetChange, error) {
+func (s *PublicBlockChainAPI) SimulateCall(ctx context.Context, args TransactionArgs, blockNrOrHash rpc.BlockNumberOrHash, overrides *StateOverride) (*vm.SimulateResponse, error) {
 	result, err := DoSimulateCall(ctx, s.b, args, blockNrOrHash, overrides, s.b.RPCEVMTimeout(), s.b.RPCGasCap())
 	if err != nil {
 		return nil, err
@@ -1112,6 +1112,7 @@ func (s *PublicBlockChainAPI) SimulateCall(ctx context.Context, args Transaction
 }
 
 func (s *PublicBlockChainAPI) BlockReceipts(ctx context.Context, blockNrOrHash rpc.BlockNumberOrHash) (types.Receipts, error) {
+
 	block, err := s.b.BlockByNumberOrHash(ctx, blockNrOrHash)
 	if err != nil {
 		return nil, err
@@ -1124,7 +1125,23 @@ func (s *PublicBlockChainAPI) BlockReceipts(ctx context.Context, blockNrOrHash r
 	if err != nil {
 		return nil, err
 	}
+
 	return receipts, nil
+}
+
+func (s *PublicBlockChainAPI) Headers(ctx context.Context, blockNums []rpc.BlockNumber) ([]map[string]interface{}, error) {
+	if len(blockNums) > 100 {
+		return nil, errors.New("request for max 100 blocks, exceed the max")
+	}
+	var blockInfos []map[string]interface{}
+	for _, blockNum := range blockNums {
+		blockInfo, err := s.GetBlockByNumber(ctx, blockNum, false)
+		if err != nil {
+			return nil, err
+		}
+		blockInfos = append(blockInfos, blockInfo)
+	}
+	return blockInfos, nil
 }
 
 func DoEstimateGas(ctx context.Context, b Backend, args TransactionArgs, blockNrOrHash rpc.BlockNumberOrHash, gasCap uint64) (hexutil.Uint64, error) {
