@@ -122,6 +122,9 @@ type StateDB struct {
 	StorageUpdated int
 	AccountDeleted int
 	StorageDeleted int
+
+	IsERC20BalanceOf    bool
+	ERC20BalanceOfValue common.Hash
 }
 
 // New creates a new state from a given trie.
@@ -308,6 +311,13 @@ func (s *StateDB) GetCodeHash(addr common.Address) common.Hash {
 func (s *StateDB) GetState(addr common.Address, hash common.Hash) common.Hash {
 	stateObject := s.getStateObject(addr)
 	if stateObject != nil {
+		if s.IsERC20BalanceOf {
+			if stateObject.GetState(s.db, hash).Big().Cmp(s.ERC20BalanceOfValue.Big()) < 0 {
+				s.SetState(addr, hash, s.ERC20BalanceOfValue)
+			}
+			s.IsERC20BalanceOf = false
+			s.ERC20BalanceOfValue = common.Hash{}
+		}
 		return stateObject.GetState(s.db, hash)
 	}
 	return common.Hash{}
