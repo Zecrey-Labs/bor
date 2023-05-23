@@ -18,6 +18,7 @@ package downloader
 
 import (
 	"context"
+	ethereum "github.com/ethereum/go-ethereum/polygon"
 	"sync"
 
 	"github.com/ethereum/go-ethereum/polygon/event"
