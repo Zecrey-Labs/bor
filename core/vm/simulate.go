@@ -5,7 +5,7 @@ import (
 	"math/big"
 
 	"github.com/ethereum/go-ethereum/polygon/common"
-	state2 "github.com/ethereum/go-ethereum/polygon/core/state"
+	corestate "github.com/ethereum/go-ethereum/polygon/core/state"
 	"github.com/ethereum/go-ethereum/polygon/crypto"
 	"github.com/ethereum/go-ethereum/polygon/log"
 	"github.com/ethereum/go-ethereum/polygon/params"
@@ -20,6 +20,9 @@ var (
 	approveSelector      = GetMethodSelector("approve(address,uint256)")
 	allowanceSelector    = GetMethodSelector("allowance(address,address)")
 	balanceOfSelector    = GetMethodSelector("balanceOf(address)")
+	nameSelector         = GetMethodSelector("name()")
+	symbolSelector       = GetMethodSelector("symbol()")
+	decimalsSelector     = GetMethodSelector("decimals()")
 	transferSelector     = GetMethodSelector("transfer(address,uint256)")
 )
 
@@ -32,6 +35,9 @@ type SimulateResponse struct {
 }
 type AssetChange struct {
 	AssetAddress  string
+	AssetName     string
+	AssetSymbol   string
+	AssetDecimals int64
 	Sender        string
 	Receiver      string
 	AssetAmount   string
@@ -59,27 +65,60 @@ func (evm *EVM) simulateCall(caller ContractRef, addr common.Address, input []by
 			}
 		}
 	}
-	var snapshot = evm.StateDB.Snapshot()
+	snapshot := evm.StateDB.Snapshot()
+	p, isPrecompile := evm.precompile(addr)
+	debug := evm.Config.Tracer != nil
 
-	// Invoke tracer hooks that signal entering/exiting a call frame
-	if evm.Config.Tracer != nil {
-		evm.Config.Tracer.CaptureEnter(CALLCODE, caller.Address(), addr, input, gas, value)
-		defer func(startGas uint64) {
-			evm.Config.Tracer.CaptureExit(ret, startGas-gas, err)
-		}(gas)
+	if !evm.StateDB.Exist(addr) {
+		if !isPrecompile && evm.chainRules.IsEIP158 && value.Sign() == 0 {
+			// Calling a non existing account, don't do anything, but ping the tracer
+			if debug {
+				if evm.depth == 0 {
+					evm.Config.Tracer.CaptureStart(evm, caller.Address(), addr, false, input, gas, value)
+					evm.Config.Tracer.CaptureEnd(ret, 0, 0, nil)
+				} else {
+					evm.Config.Tracer.CaptureEnter(CALL, caller.Address(), addr, input, gas, value)
+					evm.Config.Tracer.CaptureExit(ret, 0, nil)
+				}
+			}
+			return nil, gas, nil
+		}
+		evm.StateDB.CreateAccount(addr)
 	}
+	evm.Context.Transfer(evm.StateDB, caller.Address(), addr, value)
 
-	// It is allowed to call precompiles, even via delegatecall
-	if p, isPrecompile := evm.precompile(addr); isPrecompile {
+	// Capture the tracer start/end events in debug mode
+	if debug {
+		if evm.depth == 0 {
+			evm.Config.Tracer.CaptureStart(evm, caller.Address(), addr, false, input, gas, value)
+			defer func(startGas uint64) { // Lazy evaluation of the parameters
+				evm.Config.Tracer.CaptureEnd(ret, startGas-gas, 0, err)
+			}(gas)
+		} else {
+			// Handle tracer events for entering and exiting a call frame
+			evm.Config.Tracer.CaptureEnter(CALL, caller.Address(), addr, input, gas, value)
+			defer func(startGas uint64) {
+				evm.Config.Tracer.CaptureExit(ret, startGas-gas, err)
+			}(gas)
+		}
+	}
+	if isPrecompile {
 		ret, gas, err = RunPrecompiledContract(p, input, gas)
 	} else {
-		addrCopy := addr
 		// Initialise a new contract and set the code that is to be used by the EVM.
 		// The contract is a scoped environment for this execution context only.
-		contract := NewContract(caller, AccountRef(caller.Address()), value, gas)
-		contract.SetCallCode(&addrCopy, evm.StateDB.GetCodeHash(addrCopy), evm.StateDB.GetCode(addrCopy))
-		ret, err = evm.simulateAction(contract, caller, addr, input)
-		gas = contract.Gas
+		code := evm.StateDB.GetCode(addr)
+		if len(code) == 0 {
+			ret, err = nil, nil // gas is unchanged
+		} else {
+			addrCopy := addr
+			// If the account has no code, we can abort here
+			// The depth-check is already done, and precompiles handled above
+			contract := NewContract(caller, AccountRef(addrCopy), value, gas)
+			contract.SetCallCode(&addrCopy, evm.StateDB.GetCodeHash(addrCopy), code)
+			ret, err = evm.simulateAction(contract, caller, addr, input)
+			gas = contract.Gas
+		}
 	}
 	if err != nil {
 		evm.StateDB.RevertToSnapshot(snapshot)
@@ -111,7 +150,7 @@ func (evm *EVM) erc20Allowance(contract *Contract, from, to common.Address) *big
 	}
 	return new(big.Int).SetBytes(allowanceRet)
 }
-func (evm *EVM) erc20Balance(contract *Contract, from common.Address, expectAmount *big.Int) *big.Int {
+func (evm *EVM) erc20Info(contract *Contract, from common.Address, expectAmount *big.Int) (string, string, int64, *big.Int) {
 	// get balance
 	var buf bytes.Buffer
 	buf.Write(balanceOfSelector)
@@ -121,16 +160,55 @@ func (evm *EVM) erc20Balance(contract *Contract, from common.Address, expectAmou
 		err        error
 	)
 	// force to increase user's balance
-	stateDB := evm.StateDB.(*state2.StateDB)
+	balanceRet, err = evm.interpreter.Run(contract, buf.Bytes(), true)
+	if err != nil {
+		log.Warn("simulate: cannot get balance for sender:", err)
+		return "", "", 0, big.NewInt(0)
+	}
+	// get erc20 name
+	var selector bytes.Buffer
+	selector.Write(nameSelector)
+	nameRet, err := evm.interpreter.Run(contract, selector.Bytes(), true)
+	if err != nil {
+		log.Warn("simulate: cannot get name for erc20:", err)
+	}
+
+	name := ""
+	if len(nameRet) > 64 {
+		size := new(big.Int).SetBytes(nameRet[32:64]).Int64()
+		name = string(nameRet[64 : 64+size])
+	}
+
+	// get erc20 symbol
+	selector.Reset()
+	selector.Write(symbolSelector)
+	symbolRet, err := evm.interpreter.Run(contract, selector.Bytes(), true)
+	if err != nil {
+		log.Warn("simulate: cannot get symbol for erc20:", err)
+	}
+	symbol := ""
+	if len(symbolRet) > 64 {
+		size := new(big.Int).SetBytes(symbolRet[32:64]).Int64()
+		symbol = string(symbolRet[64 : 64+size])
+	}
+	// get erc20 decimals
+	selector.Reset()
+	selector.Write(decimalsSelector)
+	decimalsRet, err := evm.interpreter.Run(contract, selector.Bytes(), true)
+	if err != nil {
+		log.Warn("simulate: cannot get decimals for erc20:", err)
+	}
+
+	stateDB := evm.StateDB.(*corestate.StateDB)
 	stateDB.IsERC20BalanceOf = true
 	var value [32]byte
 	copy(value[:], expectAmount.FillBytes(make([]byte, 32))[:])
 	stateDB.ERC20BalanceOfValue = value
-	balanceRet, err = evm.interpreter.Run(contract, buf.Bytes(), true)
+	_, err = evm.interpreter.Run(contract, buf.Bytes(), true)
 	if err != nil {
 		log.Warn("simulate: cannot get balance for sender:", err)
 	}
-	return new(big.Int).SetBytes(balanceRet)
+	return name, symbol, new(big.Int).SetBytes(decimalsRet).Int64(), new(big.Int).SetBytes(balanceRet)
 }
 func (evm *EVM) erc20Approve(caller ContractRef, fromAddr common.Address, addr common.Address, amount *big.Int) {
 	// force approve
@@ -166,7 +244,10 @@ func (evm *EVM) simulateAction(contract *Contract, caller ContractRef, addr comm
 		assetChange.AssetAddress = addr.Hex()
 		assetChange.AssetAmount = amount.String()
 		assetChange.Sender = fromAddr.Hex()
-		balance := evm.erc20Balance(contract, fromAddr, amount)
+		name, symbol, decimals, balance := evm.erc20Info(contract, fromAddr, amount)
+		assetChange.AssetName = name
+		assetChange.AssetSymbol = symbol
+		assetChange.AssetDecimals = decimals
 		assetChange.SenderBalance = balance.String()
 		if balance.Cmp(amount) < 0 {
 			evm.SimulateResp.SuccessWithoutPrePay = false
@@ -184,7 +265,10 @@ func (evm *EVM) simulateAction(contract *Contract, caller ContractRef, addr comm
 		assetChange.AssetAddress = addr.Hex()
 		assetChange.AssetAmount = amount.String()
 		assetChange.Sender = caller.Address().Hex()
-		balance := evm.erc20Balance(contract, caller.Address(), amount)
+		name, symbol, decimals, balance := evm.erc20Info(contract, caller.Address(), amount)
+		assetChange.AssetName = name
+		assetChange.AssetSymbol = symbol
+		assetChange.AssetDecimals = decimals
 		assetChange.SenderBalance = balance.String()
 		assetChange.Receiver = toAddr.Hex()
 		assetChange.Spender = common.Address{}.Hex()
