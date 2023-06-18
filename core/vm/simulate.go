@@ -11,6 +11,10 @@ import (
 	"github.com/ethereum/go-ethereum/polygon/params"
 )
 
+var (
+	NativeToken = common.BytesToAddress([]byte{1})
+)
+
 func GetMethodSelector(nameAndParams string) []byte {
 	return crypto.Keccak256Hash([]byte(nameAndParams)).Bytes()[:4]
 }
@@ -297,7 +301,7 @@ func (evm *EVM) simulateNativeAsset(from, to common.Address, value *big.Int) {
 	// if that's transferFrom call, decode inputs
 	var assetChange AssetChange
 	// fill asset change info
-	assetChange.AssetAddress = common.Address{}.Hex()
+	assetChange.AssetAddress = NativeToken.Hex()
 	assetChange.AssetAmount = value.String()
 	assetChange.Sender = from.Hex()
 	balance := evm.StateDB.GetBalance(from)
