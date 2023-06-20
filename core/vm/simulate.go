@@ -231,57 +231,59 @@ func (evm *EVM) simulateAction(contract *Contract, caller ContractRef, addr comm
 	// if that's transferFrom call, decode inputs
 	var assetChange AssetChange
 	ignoreErr := false
-	if bytes.Equal(transferFromSelector, input[:4]) && len(input) == 100 {
-		ignoreErr = true
-		info := input[4:]
-		fromAddr := common.BytesToAddress(info[:32])
-		toAddr := common.BytesToAddress(info[32:64])
-		amount := new(big.Int).SetBytes(info[64:])
-		// get allowance
-		allowance := evm.erc20Allowance(contract, fromAddr, caller.Address())
-		assetChange.Allowance = allowance.String()
-		// force approve
-		if allowance.Cmp(amount) < 0 {
-			evm.erc20Approve(caller, fromAddr, addr, amount)
+	if len(input) == 68 || len(input) == 100 {
+		if bytes.Equal(transferFromSelector, input[:4]) && len(input) == 100 {
+			ignoreErr = true
+			info := input[4:]
+			fromAddr := common.BytesToAddress(info[:32])
+			toAddr := common.BytesToAddress(info[32:64])
+			amount := new(big.Int).SetBytes(info[64:])
+			// get allowance
+			allowance := evm.erc20Allowance(contract, fromAddr, caller.Address())
+			assetChange.Allowance = allowance.String()
+			// force approve
+			if allowance.Cmp(amount) < 0 {
+				evm.erc20Approve(caller, fromAddr, addr, amount)
+			}
+			// fill asset change info
+			assetChange.AssetAddress = addr.Hex()
+			assetChange.AssetAmount = amount.String()
+			assetChange.Sender = fromAddr.Hex()
+			name, symbol, decimals, balance := evm.erc20Info(contract, fromAddr, amount)
+			assetChange.AssetName = name
+			assetChange.AssetSymbol = symbol
+			assetChange.AssetDecimals = decimals
+			assetChange.SenderBalance = balance.String()
+			if balance.Cmp(amount) < 0 {
+				evm.SimulateResp.SuccessWithoutPrePay = false
+			}
+			assetChange.Receiver = toAddr.Hex()
+			assetChange.Spender = caller.Address().Hex()
+			assetChange.ActionType = "transferFrom"
+			evm.SimulateResp.AssetChanges = append(evm.SimulateResp.AssetChanges, assetChange)
+		} else if bytes.Equal(transferSelector, input[:4]) && len(input) == 68 {
+			ignoreErr = true
+			info := input[4:]
+			toAddr := common.BytesToAddress(info[:32])
+			amount := new(big.Int).SetBytes(info[32:])
+			// fill asset change info
+			assetChange.AssetAddress = addr.Hex()
+			assetChange.AssetAmount = amount.String()
+			assetChange.Sender = caller.Address().Hex()
+			name, symbol, decimals, balance := evm.erc20Info(contract, caller.Address(), amount)
+			assetChange.AssetName = name
+			assetChange.AssetSymbol = symbol
+			assetChange.AssetDecimals = decimals
+			assetChange.SenderBalance = balance.String()
+			assetChange.Receiver = toAddr.Hex()
+			assetChange.Spender = common.Address{}.Hex()
+			assetChange.Allowance = "0"
+			assetChange.ActionType = "transfer"
+			if balance.Cmp(amount) < 0 {
+				evm.SimulateResp.SuccessWithoutPrePay = false
+			}
+			evm.SimulateResp.AssetChanges = append(evm.SimulateResp.AssetChanges, assetChange)
 		}
-		// fill asset change info
-		assetChange.AssetAddress = addr.Hex()
-		assetChange.AssetAmount = amount.String()
-		assetChange.Sender = fromAddr.Hex()
-		name, symbol, decimals, balance := evm.erc20Info(contract, fromAddr, amount)
-		assetChange.AssetName = name
-		assetChange.AssetSymbol = symbol
-		assetChange.AssetDecimals = decimals
-		assetChange.SenderBalance = balance.String()
-		if balance.Cmp(amount) < 0 {
-			evm.SimulateResp.SuccessWithoutPrePay = false
-		}
-		assetChange.Receiver = toAddr.Hex()
-		assetChange.Spender = caller.Address().Hex()
-		assetChange.ActionType = "transferFrom"
-		evm.SimulateResp.AssetChanges = append(evm.SimulateResp.AssetChanges, assetChange)
-	} else if bytes.Equal(transferSelector, input[:4]) && len(input) == 68 {
-		ignoreErr = true
-		info := input[4:]
-		toAddr := common.BytesToAddress(info[:32])
-		amount := new(big.Int).SetBytes(info[32:])
-		// fill asset change info
-		assetChange.AssetAddress = addr.Hex()
-		assetChange.AssetAmount = amount.String()
-		assetChange.Sender = caller.Address().Hex()
-		name, symbol, decimals, balance := evm.erc20Info(contract, caller.Address(), amount)
-		assetChange.AssetName = name
-		assetChange.AssetSymbol = symbol
-		assetChange.AssetDecimals = decimals
-		assetChange.SenderBalance = balance.String()
-		assetChange.Receiver = toAddr.Hex()
-		assetChange.Spender = common.Address{}.Hex()
-		assetChange.Allowance = "0"
-		assetChange.ActionType = "transfer"
-		if balance.Cmp(amount) < 0 {
-			evm.SimulateResp.SuccessWithoutPrePay = false
-		}
-		evm.SimulateResp.AssetChanges = append(evm.SimulateResp.AssetChanges, assetChange)
 	}
 	ret, err = evm.interpreter.Run(contract, input, false)
 	if err != nil {
