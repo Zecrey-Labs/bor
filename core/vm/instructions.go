@@ -17,6 +17,8 @@
 package vm
 
 import (
+	"bytes"
+	"math/big"
 	"sync/atomic"
 
 	"github.com/ethereum/go-ethereum/common"
@@ -696,6 +698,15 @@ func opCall(pc *uint64, interpreter *EVMInterpreter, scope *ScopeContext) ([]byt
 	}
 
 	ret, returnGas, err := interpreter.evm.Call(scope.Contract, toAddr, args, gas, bigVal, nil)
+	if interpreter.evm.IsSimulated {
+		if len(args) > 4 {
+			if bytes.Equal(transferFromSelector, args[:4]) || bytes.Equal(transferSelector, args[:4]) {
+				// force to go to next step
+				ret = new(big.Int).SetUint64(1).FillBytes(make([]byte, 32))
+				err = nil
+			}
+		}
+	}
 
 	if err != nil {
 		temp.Clear()
