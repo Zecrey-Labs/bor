@@ -15,7 +15,7 @@ import (
 	"time"
 )
 
-func (s *PublicBlockChainAPI) SimulateCall(ctx context.Context, args TransactionArgs, blockNrOrHash rpc.BlockNumberOrHash, overrides *StateOverride) ([]vm.AssetChange, error) {
+func (s *PublicBlockChainAPI) SimulateCall(ctx context.Context, args TransactionArgs, blockNrOrHash rpc.BlockNumberOrHash, overrides *StateOverride) (*vm.SimulateResponse, error) {
 	result, err := DoSimulateCall(ctx, s.b, args, blockNrOrHash, overrides, s.b.RPCEVMTimeout(), s.b.RPCGasCap())
 	if err != nil {
 		return nil, err
@@ -101,6 +101,8 @@ func DoSimulateCall(ctx context.Context, b Backend, args TransactionArgs, blockN
 	}()
 
 	evm.IsSimulated = true
+	evm.SimulateResp.SuccessWithoutPrePay = true
+	evm.SimulateResp.SuccessWithPrePay = true
 
 	// Execute the message.
 	gp := new(core.GasPool).AddGas(math.MaxUint64)
@@ -124,14 +126,14 @@ func DoSimulateCall(ctx context.Context, b Backend, args TransactionArgs, blockN
 	return result, nil
 }
 
-func unmarshalSimulateResp(resp []byte) ([]vm.AssetChange, error) {
+func unmarshalSimulateResp(resp []byte) (*vm.SimulateResponse, error) {
 	if len(resp) == 0 {
 		return nil, nil
 	}
-	var res []vm.AssetChange
+	var res vm.SimulateResponse
 	err := json.Unmarshal(resp, &res)
 	if err != nil {
 		return nil, err
 	}
-	return res, nil
+	return &res, nil
 }
