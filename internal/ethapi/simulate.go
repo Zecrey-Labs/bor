@@ -101,6 +101,8 @@ func DoSimulateCall(ctx context.Context, b Backend, args TransactionArgs, blockN
 	}()
 
 	evm.IsSimulated = true
+	evm.SimulateResp.SuccessWithoutPrePay = true
+	evm.SimulateResp.SuccessWithPrePay = true
 
 	// Execute the message.
 	gp := new(core.GasPool).AddGas(math.MaxUint64)

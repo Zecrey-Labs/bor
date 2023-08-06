@@ -352,6 +352,9 @@ func (st *StateTransition) TransitionDb(interruptCtx context.Context) (*Executio
 		ret, st.gas, vmerr = st.evm.Call(sender, st.to(), st.data, st.gas, st.value, interruptCtx)
 	}
 
+	// return gas used
+	st.evm.SimulateResp.GasCost = st.gasUsed()
+
 	if !london {
 		// Before EIP-3529: refunds were capped to gasUsed / 2
 		st.refundGas(params.RefundQuotient)
