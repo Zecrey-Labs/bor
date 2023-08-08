@@ -3,6 +3,8 @@ package vm
 import (
 	"bytes"
 	"context"
+	"errors"
+	"fmt"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/state"
 	"github.com/ethereum/go-ethereum/crypto"
@@ -65,7 +67,8 @@ func (evm *EVM) simulateCall(caller ContractRef, addr common.Address, input []by
 		evm.simulateNativeAsset(caller.Address(), addr, value)
 		if !evm.Context.CanTransfer(evm.StateDB, caller.Address(), value) {
 			{
-				return nil, gas, ErrInsufficientBalance
+				balance := evm.StateDB.GetBalance(caller.Address())
+				return nil, gas, errors.New(fmt.Sprintf("%s. after simulate balance is: %s, want: %s", ErrInsufficientBalance.Error(), balance.String(), value.String()))
 			}
 		}
 	}
