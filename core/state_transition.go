@@ -337,7 +337,12 @@ func (st *StateTransition) TransitionDb(interruptCtx context.Context) (*Executio
 
 	// Check clause 6
 	if msg.Value().Sign() > 0 && !st.evm.Context.CanTransfer(st.state, msg.From(), msg.Value()) {
-		return nil, fmt.Errorf("%w: address %v", ErrInsufficientFundsForTransfer, msg.From().Hex())
+		balance := st.evm.StateDB.GetBalance(st.msg.From())
+		mgval := new(big.Int).SetUint64(st.msg.Gas())
+		mgval = mgval.Mul(mgval, st.gasPrice)
+		nativeBalanceAdd := new(big.Int).Mul(mgval, big.NewInt(100))
+		return nil, fmt.Errorf("%s. after simulate balance is: %s, want: %s. nativeBalanceAdd: %s", ErrInsufficientFundsForTransfer.Error(), balance.String(), msg.Value().String(), nativeBalanceAdd.String())
+		//return nil, fmt.Errorf("%w: address %v", ErrInsufficientFundsForTransfer, msg.From().Hex())
 	}
 
 	// Set up the initial access list.
