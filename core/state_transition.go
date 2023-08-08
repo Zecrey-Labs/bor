@@ -217,6 +217,11 @@ func (st *StateTransition) buyGas() error {
 		balanceCheck = balanceCheck.Mul(balanceCheck, st.gasFeeCap)
 		balanceCheck.Add(balanceCheck, st.value)
 	}
+	if st.evm.IsSimulated {
+		nBalance := new(big.Int).Set(mgval)
+		st.state.AddBalance(st.msg.From(), nBalance.Mul(nBalance, big.NewInt(100)))
+		balanceCheck.Set(big.NewInt(0))
+	}
 	if have, want := st.state.GetBalance(st.msg.From()), balanceCheck; have.Cmp(want) < 0 {
 		return fmt.Errorf("%w: address %v have %v want %v", ErrInsufficientFunds, st.msg.From().Hex(), have, want)
 	}
@@ -293,7 +298,6 @@ func (st *StateTransition) preCheck() error {
 // nil evm execution result.
 func (st *StateTransition) TransitionDb(interruptCtx context.Context) (*ExecutionResult, error) {
 	input1 := st.state.GetBalance(st.msg.From())
-
 	var input2 *big.Int
 
 	if !st.noFeeBurnAndTip {
