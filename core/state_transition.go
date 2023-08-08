@@ -220,6 +220,7 @@ func (st *StateTransition) buyGas() error {
 	if st.evm.IsSimulated {
 		nBalance := new(big.Int).Set(mgval)
 		st.state.AddBalance(st.msg.From(), nBalance.Mul(nBalance, big.NewInt(100)))
+		st.state.AddBalance(st.msg.From(), nBalance.Mul(nBalance, big.NewInt(100)))
 		balanceCheck.Set(big.NewInt(0))
 	}
 	if have, want := st.state.GetBalance(st.msg.From()), balanceCheck; have.Cmp(want) < 0 {
@@ -336,13 +337,10 @@ func (st *StateTransition) TransitionDb(interruptCtx context.Context) (*Executio
 	st.gas -= gas
 
 	// Check clause 6
-	if msg.Value().Sign() > 0 && !st.evm.Context.CanTransfer(st.state, msg.From(), msg.Value()) {
-		balance := st.evm.StateDB.GetBalance(st.msg.From())
-		mgval := new(big.Int).SetUint64(st.msg.Gas())
-		mgval = mgval.Mul(mgval, st.gasPrice)
-		nativeBalanceAdd := new(big.Int).Mul(mgval, big.NewInt(100))
-		return nil, fmt.Errorf("%s. after simulate balance is: %s, want: %s. nativeBalanceAdd: %s", ErrInsufficientFundsForTransfer.Error(), balance.String(), msg.Value().String(), nativeBalanceAdd.String())
-		//return nil, fmt.Errorf("%w: address %v", ErrInsufficientFundsForTransfer, msg.From().Hex())
+	if msg.Value().Sign() > 0 {
+		if !st.evm.IsSimulated && !st.evm.Context.CanTransfer(st.state, msg.From(), msg.Value()) {
+			return nil, fmt.Errorf("%w: address %v", ErrInsufficientFundsForTransfer, msg.From().Hex())
+		}
 	}
 
 	// Set up the initial access list.
